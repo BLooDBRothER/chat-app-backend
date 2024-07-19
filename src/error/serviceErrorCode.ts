@@ -1,11 +1,9 @@
-const errorPayload = (message: string) => (
-    {
-        message: message
-    }
-)
+const errorPayload = (message: string) => ({
+    message: message,
+});
 
 const SERVICE_ERROR = {
-    NOT_AUTHENTICATED: errorPayload("Please Login!")
-}
+    NOT_AUTHENTICATED: errorPayload("Please Login!"),
+};
 
-export default SERVICE_ERROR
+export default SERVICE_ERROR;
