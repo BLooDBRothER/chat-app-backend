@@ -5,8 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "npx tsc",
-    "start": "npx tsc && node dist/server.js",
+    "build": "webpack --mode=production --node-env=production",
+    "start": "webpack --mode=production --node-env=production && node dist/server.js",
+    "build:dev": "webpack --mode=development && node dev/server.js",
     "prettier": "prettier \"src/**/*.ts\"",
     "prettier:check": "yarn prettier --check",
     "prettier:fix": "yarn prettier --write"
@@ -25,7 +26,9 @@
     "@types/node": "^20.14.11",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.3"
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.3",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
   }
 }

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import validateToken from "../authentication/authSerivce";
+import validateToken from "@/authentication/authSerivce";
 
 const authorizationMiddleware = async (
     req: Request,

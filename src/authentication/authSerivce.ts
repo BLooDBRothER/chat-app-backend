@@ -1,6 +1,6 @@
 import { Response } from "express";
 import admin from "firebase-admin";
-import SERVICE_ERROR from "../error/serviceErrorCode";
+import SERVICE_ERROR from "@/error/serviceErrorCode";
 
 const validateToken = async (idToken: string | undefined, res: Response) => {
     try {
@@ -8,13 +8,12 @@ const validateToken = async (idToken: string | undefined, res: Response) => {
         const token = idToken?.split(" ").at(1);
 
         if (tokenPrefix !== "Bearer" || !token) {
-            res.status(401).json(SERVICE_ERROR.NOT_AUTHENTICATED);
+            res.status(SERVICE_ERROR.USER.NOT_AUTHENTICATED.status).json(SERVICE_ERROR.USER.NOT_AUTHENTICATED.message);
             throw Error("Unauthorized");
         }
         return await admin.auth().verifyIdToken(token);
     } catch (err) {
-        res.status(401).json(SERVICE_ERROR.NOT_AUTHENTICATED);
-        throw Error("Unauthorized");
+        return res.status(SERVICE_ERROR.USER.NOT_AUTHENTICATED.status).json(SERVICE_ERROR.USER.NOT_AUTHENTICATED.message);
     }
 };
 

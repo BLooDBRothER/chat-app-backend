@@ -2,4 +2,5 @@ firebase.json
 node_modules
 .env
 dist/
+dev/
 .idea/

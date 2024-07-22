@@ -12,6 +12,10 @@
     "allowJs": true,
     "outDir": "./dist",
 
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 
