@@ -1,24 +1,38 @@
 import amqplib, { credentials } from "amqplib";
+import { error } from "console";
 
-const RabbitMQ = async () => {
-    const conn = await amqplib.connect("amqp://localhost", {
-        credentials: credentials.plain("admin", "admin"),
-    });
-    const channel = await conn.createChannel();
+const RabbitMQ = () => {
+    let _channel: amqplib.Channel ;
 
-    var queue = "task_queue";
-    var msg = "Hello World!";
+    const initConnection = async () => {
+        if(_channel) {
+            return;
+        }
 
-    // This makes sure the queue is declared before attempting to consume from it
-    channel.assertQueue(queue, {
-        durable: true,
-    });
+        if(!process.env.RABBITMQ_DEFAULT_USER || !process.env.RABBITMQ_DEFAULT_PASS) {
+            throw error("No credential for rabbitmq")
+        }
 
-    channel.sendToQueue(queue, Buffer.from(msg), {
-        persistent: true,
-    });
+        const connection = await amqplib.connect("amqp://localhost", {
+            credentials: credentials.plain(process.env.RABBITMQ_DEFAULT_USER, "admin"),
+        });
 
-    console.log(" [x] Sent '%s'", msg);
+        console.log(`[Info]: RabbitMQ | Connected...`);
+
+        _channel = await connection.createChannel();
+    }
+
+    const sendMessage = async (queue: string, msg: object) => {
+        await _channel.assertQueue(queue, {
+            durable: true
+        });
+
+        _channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
+    }
+
+    return { initConnection, sendMessage }
 };
 
-export default RabbitMQ;
+const rabbitMq = RabbitMQ();
+
+export default rabbitMq;
