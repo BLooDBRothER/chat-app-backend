@@ -4,18 +4,18 @@ import authorizationMiddleware from "@/middleware/authMiddleware";
 
 import createGroupNotificationRouter from "@/notification/group/router/groups"
 import rabbitMq from "@/rabbitMq/rabbitMq";
-import logMiddleware from "./middleware/logMiddleware";
 
 config();
 
 rabbitMq.initConnection();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT || 3000);
+const host = process.env.HOST || 'localhost';
 
 app.use(express.json());
 
-app.use(authorizationMiddleware)
+// app.use(authorizationMiddleware)
 
 app.get("/", async (_: Request, res: Response) => {
     res.send("Hello world");
@@ -23,8 +23,7 @@ app.get("/", async (_: Request, res: Response) => {
 
 app.use("/api/notification/groups", createGroupNotificationRouter);
 
-app.use(logMiddleware);
 
-app.listen(port, () => {
+app.listen(port, host, () => {
     console.log(`[Info]: Server | running at http://localhost:${port}`);
 });

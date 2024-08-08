@@ -5,7 +5,8 @@ const RabbitMQ = () => {
     let _channel: amqplib.Channel ;
 
     enum QUEUE {
-        "GROUP_CREATE" = "GROUP_CREATE"
+        "GROUP_CREATE" = "GROUP_CREATE",
+        "USER_GROUP_ACCEPT" = "USER_GROUP_ACCEPT"
     }
 
     const initConnection = async () => {

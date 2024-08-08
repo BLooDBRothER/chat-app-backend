@@ -5,6 +5,9 @@ const errorPayload = (status:number, errorCode: string, message: string) => ({
 });
 
 const SERVICE_ERROR = {
+    ALL: {
+        INVALID_REQUEST: errorPayload(400, "INVALID_REQUEST", "Invalid Request")
+    },
     USER: {
         NOT_AUTHENTICATED: errorPayload(401, "NOT_AUTHENTICATED", "Please Login!"),
         NO_USER_FOUND: errorPayload(404, "NO_USER_FOUND", "No User Found")

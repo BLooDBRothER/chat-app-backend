@@ -1,8 +1,11 @@
 import express from "express";
-import { triggerCreateGroupNotification } from "../controller/createGroup";
+import GroupNotificationController from "../controller/createGroup";
 
 const router = express.Router();
+const groupNotificationController = GroupNotificationController();
 
-router.get("/create/:groupId", triggerCreateGroupNotification);
+router.post("/create/:groupId", groupNotificationController.triggerCreateGroupNotification);
+
+router.post("/request-accept/:groupId", groupNotificationController.triggerAcceptGroupNotification);
 
 export default router;
