@@ -1,17 +1,19 @@
-const errorPayload = (status:number, message: string) => ({
+const errorPayload = (status:number, errorCode: string, message: string) => ({
     status,
+    errorCode,
     message
 });
 
 const SERVICE_ERROR = {
     USER: {
-        NOT_AUTHENTICATED: errorPayload(401, "Please Login!"),
+        NOT_AUTHENTICATED: errorPayload(401, "NOT_AUTHENTICATED", "Please Login!"),
+        NO_USER_FOUND: errorPayload(404, "NO_USER_FOUND", "No User Found")
     },
     GROUP: {
-        NO_GROUP_FOUND: errorPayload(404, "No Group Found"),
+        NO_GROUP_FOUND: errorPayload(404, "NO_GROUP_FOUND", "No Group Found"),
     },
     NOTIFICATION: {
-        NOTIFICATION_TRIGGERED: errorPayload(400, "Notification Already Triggered")
+        NOTIFICATION_TRIGGERED: errorPayload(400, "NOTIFICATION_TRIGGERED", "Notification Already Triggered")
     }
 };
 

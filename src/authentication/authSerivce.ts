@@ -8,12 +8,12 @@ const validateToken = async (idToken: string | undefined, res: Response) => {
         const token = idToken?.split(" ").at(1);
 
         if (tokenPrefix !== "Bearer" || !token) {
-            res.status(SERVICE_ERROR.USER.NOT_AUTHENTICATED.status).json(SERVICE_ERROR.USER.NOT_AUTHENTICATED.message);
+            res.status(SERVICE_ERROR.USER.NOT_AUTHENTICATED.status).json(SERVICE_ERROR.USER.NOT_AUTHENTICATED);
             throw Error("Unauthorized");
         }
         return await admin.auth().verifyIdToken(token);
     } catch (err) {
-        return res.status(SERVICE_ERROR.USER.NOT_AUTHENTICATED.status).json(SERVICE_ERROR.USER.NOT_AUTHENTICATED.message);
+        return res.status(SERVICE_ERROR.USER.NOT_AUTHENTICATED.status).json(SERVICE_ERROR.USER.NOT_AUTHENTICATED);
     }
 };
 
